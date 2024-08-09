@@ -42,6 +42,7 @@ project_root/
 ├── call_sort_api.py             # Skript, das die API aufruft und die sortierten Daten anzeigt
 ├── templates/                   # Ordner für HTML-Vorlagen
 │   └── results.html             # HTML-Vorlage für die Ausgabe der sortierten Daten
+    └── index.html               # HTML-Vorlage für Eingabe der Sotierart und Anzeige
 └── README.md                    # Dieses README-Dokument
 ```
 
