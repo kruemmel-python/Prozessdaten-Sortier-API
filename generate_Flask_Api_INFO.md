@@ -3,7 +3,7 @@
 
 ## Übersicht
 
-Unsere API ist flexibel gestaltet und ermöglicht die Sortierung jeglicher CSV-Datei basierend auf den angegebenen Spaltenköpfen. Dies bedeutet, dass die API so konfiguriert ist, dass sie mit CSV-Dateien verwendet werden kann, die unterschiedliche Spaltenstrukturen aufweisen. Solange die korrekten Spaltennamen angegeben werden, die in der Datei vorhanden sind, kann die API die gewünschte Sortierung durchführen.
+Meine API ist flexibel gestaltet und ermöglicht die Sortierung jeglicher CSV-Datei basierend auf den angegebenen Spaltenköpfen. Dies bedeutet, dass die API so konfiguriert ist, dass sie mit CSV-Dateien verwendet werden kann, die unterschiedliche Spaltenstrukturen aufweisen. Solange die korrekten Spaltennamen angegeben werden, die in der Datei vorhanden sind, kann die API die gewünschte Sortierung durchführen.
 
 ## Hauptfunktionen
 
