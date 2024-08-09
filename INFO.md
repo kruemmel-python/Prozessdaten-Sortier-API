@@ -7,11 +7,11 @@ Unsere API ist flexibel gestaltet und ermöglicht die Sortierung jeglicher CSV-D
 
 ## Hauptfunktionen
 
-1. **CSV-Datei hochladen**:
-    - Benutzer können eine beliebige CSV-Datei über die Weboberfläche oder direkt über die API hochladen.
+1. **CSV-Datei auslesen**:
+    - Die API liest eine vordefinierte CSV-Datei aus einem Ordner aus, die zuvor dort gespeichert wurde. Es wird also keine Datei direkt über die Weboberfläche hochgeladen.
 
 2. **Spalten auswählen**:
-    - Die API erlaubt es, die gewünschten Spalten auszuwählen, nach denen die Daten sortiert werden sollen. Diese Auswahl kann über die Weboberfläche oder direkt in der API-Anfrage erfolgen.
+    - Die API erlaubt es, die gewünschten Spalten auszuwählen, nach denen die Daten sortiert werden sollen. Diese Auswahl kann über die Weboberfläche erfolgen, wo der Benutzer die gewünschten Sortierkriterien aus einer Dropdown-Liste auswählen kann.
 
 3. **Sortierung ausführen**:
     - Nach der Auswahl der Sortierkriterien führt die API die Sortierung durch und gibt die sortierten Daten zurück. Dies kann über die API als JSON oder auf der Weboberfläche als Tabelle angezeigt werden.
@@ -31,4 +31,3 @@ Diese API eignet sich hervorragend für die Verarbeitung und Analyse großer Dat
 ## Fazit
 
 Die Flexibilität und Erweiterbarkeit der API macht sie zu einem leistungsfähigen Werkzeug für die Arbeit mit CSV-Daten. Mit minimalen Anpassungen kann sie in einer Vielzahl von Projekten eingesetzt werden, um strukturierte Daten effizient zu sortieren und zu verarbeiten.
-
