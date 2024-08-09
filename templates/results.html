@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortierte Daten</title>
+</head>
+<body>
+    <h1>Sortierte Daten</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>StartUhrZeit</th>
+            <th>EndUhrzeit</th>
+            <th>Prozess</th>
+            <th>Betreff</th>
+        </tr>
+        {% for entry in data %}
+        <tr>
+            <td>{{ entry.id }}</td>
+            <td>{{ entry.StartUhrZeit }}</td>
+            <td>{{ entry.EndUhrzeit }}</td>
+            <td>{{ entry.Prozess }}</td>
+            <td>{{ entry.Betreff }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

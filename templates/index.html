@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prozessdaten Sortierung</title>
+</head>
+<body>
+    <h1>Prozessdaten Sortierung</h1>
+    <form action="/sort" method="post">
+        <label for="sort_key">Sortieren nach:</label>
+        <select id="sort_key" name="sort_key">
+            <option value="id">ID</option>
+            <option value="StartUhrZeit">StartUhrZeit</option>
+            <option value="EndUhrzeit">EndUhrzeit</option>
+            <option value="Prozess">Prozess</option>
+        </select>
+        <br><br>
+        <label for="prozess_filter">Prozess Filter:</label>
+        <input type="text" id="prozess_filter" name="prozess_filter" placeholder="z.B. Prozess_A">
+        <br><br>
+        <label for="start_date_filter">Startdatum Filter:</label>
+        <input type="datetime-local" id="start_date_filter" name="start_date_filter">
+        <br><br>
+        <label for="end_date_filter">Enddatum Filter:</label>
+        <input type="datetime-local" id="end_date_filter" name="end_date_filter">
+        <br><br>
+        <input type="submit" value="Sortieren">
+    </form>
+</body>
+</html>
