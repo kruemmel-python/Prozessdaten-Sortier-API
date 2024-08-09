@@ -1,4 +1,5 @@
-﻿# Flask-basierte API zur Sortierung von Prozessdaten
+
+# Flask-basierte API zur Sortierung von Prozessdaten
 
 ## Projektübersicht
 
@@ -30,129 +31,80 @@ Sie können die Pakete mit `pip` installieren:
 pip install Flask requests
 ```
 
-### Projektstruktur
+### Projekt klonen
 
-Das Projekt sollte die folgende Struktur haben:
+Klonen Sie dieses Repository auf Ihren lokalen Computer:
 
 ```bash
-project_root/
-│
-├── zufaellige_prozessdaten.csv  # CSV-Datei mit den Prozessdaten
-├── sort_api.py                  # Hauptskript, das die Flask-API startet
-├── call_sort_api.py             # Skript, das die API aufruft und die sortierten Daten anzeigt
-├── templates/                   # Ordner für HTML-Vorlagen
-│   └── results.html             # HTML-Vorlage für die Ausgabe der sortierten Daten
-    └── index.html               # HTML-Vorlage für Eingabe der Sotierart und Anzeige
-└── README.md                    # Dieses README-Dokument
+git clone https://github.com/kruemmel-python/Prozessdaten-Sortier-API.git
+cd Prozessdaten-Sortier-API
 ```
 
 ## Nutzung
 
-### Starten der Flask-API
-
-Um den Flask-Server zu starten, führen Sie das `sort_api.py`-Skript aus:
+Starten Sie den Flask-Server mit dem folgenden Befehl:
 
 ```bash
 python sort_api.py
 ```
 
-Der Server wird unter `http://127.0.0.1:5000` ausgeführt.
+Öffnen Sie einen Webbrowser und navigieren Sie zu `http://127.0.0.1:5000`, um die Anwendung zu nutzen.
 
-### Aufrufen der API
+### API-Endpunkte
 
-Verwenden Sie das `call_sort_api.py`-Skript, um eine `POST`-Anfrage an die API zu senden, die die Daten sortiert und die HTML-Seite mit den Ergebnissen im Browser öffnet:
+- **`/sort`**: Dieser Endpunkt akzeptiert POST-Anfragen, um die Prozessdaten zu sortieren. Die Daten werden anhand der in der Anfrage angegebenen Kriterien sortiert und als HTML-Seite angezeigt.
 
-```bash
-python call_sort_api.py
+#### Beispiel für eine POST-Anfrage:
+
+```python
+import requests
+
+url = 'http://127.0.0.1:5000/sort'
+data = {
+    "key": "StartUhrZeit",
+    "data": [...]  # Hier kommen die zu sortierenden Daten im JSON-Format
+}
+
+response = requests.post(url, json=data)
+print(response.text)
 ```
-
-## API-Endpunkte
-
-### POST `/sort`
-
-- **Beschreibung**: Sortiert die übergebenen Prozessdaten nach dem angegebenen Kriterium.
-- **Anfragemethode**: `POST`
-- **Parameter**:
-  - `key`: Der Sortierschlüssel (z.B. `id`, `StartUhrZeit`, `EndUhrzeit`, `Prozess`).
-  - `data`: Die zu sortierenden Daten (JSON-Array).
-- **Antwort**:
-  - Erfolgreich: Eine JSON-Antwort mit einem Redirect-Link zu der Seite mit den sortierten Daten.
-  - Fehlerhaft: Eine JSON-Antwort mit einer Fehlermeldung.
-
-### GET `/show_sorted_data`
-
-- **Beschreibung**: Zeigt die zuletzt sortierten Daten in einer HTML-Tabelle an.
-- **Anfragemethode**: `GET`
-- **Antwort**: Eine HTML-Seite mit den sortierten Daten.
 
 ## Sortieralgorithmus
 
-Der in diesem Projekt verwendete hybride Sortieralgorithmus analysiert zunächst die Anzahl der Inversionen in den Daten. Wenn die Anzahl der Inversionen relativ gering ist, wird die eingebaute Python-Sortiermethode verwendet. Andernfalls wird ein QuickSort-Algorithmus angewendet. Dieser Ansatz bietet eine gute Balance zwischen Stabilität und Geschwindigkeit, abhängig von der Reihenfolge der Daten.
+Der hybride Sortieralgorithmus in diesem Projekt ist eine Kombination aus direkter Sortierung und QuickSort. Der Algorithmus analysiert die Anzahl der Inversionen in den Daten, um zu entscheiden, welche Methode effizienter ist. Bei einer geringen Anzahl von Inversionen wird eine direkte Sortierung verwendet, ansonsten QuickSort.
 
-### Pseudocode:
+### Optimierung des Algorithmus
 
-```python
-def hybrid_sort(arr, key=lambda x: x):
-    def analyze_data(arr):
-        inversions = sum(1 for i in range(len(arr)) for j in range(i+1, len(arr)) if key(arr[i]) > key(arr[j]))
-        return inversions
-
-    def quicksort(arr):
-        if len(arr) <= 1:
-            return arr
-        pivot = key(arr[len(arr) // 2])
-        left = [x for x in arr if key(x) < pivot]
-        middle = [x for x in arr if key(x) == pivot]
-        right = [x for x in arr if key(x) > pivot]
-        return quicksort(left) + middle + quicksort(right)
-
-    if len(arr) <= 1:
-        return arr
-
-    inversions = analyze_data(arr)
-    if inversions < len(arr) // 2:
-        return sorted(arr, key=key)
-    else:
-        return quicksort(arr)
-```
+In zukünftigen Versionen könnte der Algorithmus durch adaptive Inversionsanalyse, zusätzliche Sortiermethoden und Parallelisierung weiter optimiert werden.
 
 ## HTML-Ausgabe
 
-Die sortierten Daten werden auf einer HTML-Seite angezeigt. Die Seite ist einfach gehalten, mit einer Tabelle, die die Felder `id`, `StartUhrZeit`, `EndUhrzeit`, `Prozess`, und `Betreff` enthält. Die HTML-Seite wird durch das Flask-Framework generiert und verwendet die `results.html`-Vorlage im `templates`-Ordner.
+Die sortierten Daten werden auf einer HTML-Seite angezeigt, die durch Flask generiert wird. Es gibt zwei Hauptdateien:
 
-**Beispielhafte Tabelle:**
-
-```html
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>StartUhrZeit</th>
-        <th>EndUhrzeit</th>
-        <th>Prozess</th>
-        <th>Betreff</th>
-    </tr>
-    <!-- Hier werden die sortierten Daten eingetragen -->
-</table>
-```
+- **index.html**: Ermöglicht dem Benutzer die Auswahl der Sortierkriterien und das Filtern der Daten.
+- **results.html**: Zeigt die sortierten Daten basierend auf den ausgewählten Kriterien an.
 
 ## Beispieldaten
 
-Die Beispieldaten (`zufaellige_prozessdaten.csv`) enthalten 1000 Datensätze mit den folgenden Spalten:
-
-- `id`: Eindeutige ID des Prozesses
-- `StartUhrZeit`: Startzeit des Prozesses
-- `EndUhrzeit`: Endzeit des Prozesses
-- `Prozess`: Name des Prozesses
-- `Betreff`: Betreff des Prozesses
+In der Datei `zufaellige_prozessdaten.csv` finden Sie Beispielprozessdaten, die zum Testen der API verwendet werden können.
 
 ## Verbesserungsmöglichkeiten
 
-- **Optimierung des Sortieralgorithmus**: Der hybride Sortieralgorithmus könnte weiter optimiert werden, um spezifischere Kriterien für den Wechsel zwischen direkter Sortierung und QuickSort zu verwenden.
-- **Erweiterung der API**: Die API könnte erweitert werden, um weitere Operationen auf den Prozessdaten zu unterstützen, wie z.B. das Filtern oder Aggregieren.
-- **Benutzeroberfläche**: Eine benutzerfreundlichere Oberfläche könnte hinzugefügt werden, um den Benutzern die Auswahl der Sortierkriterien und das Hochladen von CSV-Dateien zu ermöglichen.
+### 1. Optimierung des Sortieralgorithmus
 
-## Kontakt
+- **Adaptive Inversionsanalyse**: Dynamische Anpassung der Schwelle für den Wechsel der Sortiermethode.
+- **Erweiterung der Sortiermethoden**: Hinzufügen von MergeSort oder HeapSort.
+- **Parallelisierung**: Beschleunigung des Sortierprozesses durch Parallelisierung.
 
-Falls Sie Fragen oder Probleme mit dem Projekt haben, können Sie sich gerne an den Entwickler wenden.
+### 2. Erweiterung der API
 
+- **Filtern der Daten**: Hinzufügen von Funktionen zum Filtern und Aggregieren der Daten.
+- **Datenvalidierung**: Sicherstellung der Datenintegrität vor der Sortierung.
 
+### 3. Benutzeroberfläche
+
+- **Erweiterung der Weboberfläche**: Hinzufügen von Dropdown-Menüs für die Sortierkriterien, Upload-Funktionen für CSV-Dateien und eine erweiterte Ergebnisanzeige.
+
+## Lizenz
+
+Dieses Projekt ist unter der MIT-Lizenz lizenziert. Weitere Details finden Sie in der `LICENSE.md`-Datei.
